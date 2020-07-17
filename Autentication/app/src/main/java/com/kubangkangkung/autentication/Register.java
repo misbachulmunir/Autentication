@@ -14,15 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Register extends AppCompatActivity {
+
     EditText jNama,jEmail,jPass,jPhone;
     Button jRegister;
     ProgressBar progressBar;
     FirebaseAuth auth;
+
 
 
     @Override
@@ -71,7 +76,22 @@ public class Register extends AppCompatActivity {
                 auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if(task.isSuccessful()){
+                            //send verivifation link
+                            FirebaseUser usernya = auth.getCurrentUser();
+                            usernya.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(Register.this, "Verifikas email telah dikirim", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Register.this, "Gagal mengirim email veryfikasi"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             Toast.makeText(Register.this, "Success", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -91,6 +111,7 @@ public class Register extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),Login.class));
         finish();
     }
+
 
 
 }
