@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "155711883886",
+    "firebase_url": "https://autentication-9ef97.firebaseio.com",
+    "project_id": "autentication-9ef97",
+    "storage_bucket": "autentication-9ef97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155711883886:android:191c8076add4901a50747f",
+        "android_client_info": {
+          "package_name": "com.kubangkangkung.autentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155711883886-a5h54gnd7t22aksfb2qprk2romhbgrni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVtSidSqbuJiPMuRNWmYv1wJc-6Z2Npus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155711883886-a5h54gnd7t22aksfb2qprk2romhbgrni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
