@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -27,8 +33,10 @@ public class Register extends AppCompatActivity {
     Button jRegister;
     ProgressBar progressBar;
     FirebaseAuth auth;
+    FirebaseFirestore db ;
+    String userID;
 
-
+    private static final String TAG = "Register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +50,16 @@ public class Register extends AppCompatActivity {
         jRegister =findViewById(R.id.id_register);
         auth=FirebaseAuth.getInstance();
         progressBar=findViewById(R.id.progressBar);
+        db= FirebaseFirestore.getInstance();
 
         //ketika tombol register di tekan
         jRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nama=jNama.getText().toString().trim();
-                String email=jEmail.getText().toString().trim();
-                String pass=jPass.getText().toString().trim();
-                String phone=jPhone.getText().toString().trim();
+                final String nama=jNama.getText().toString();
+                final String email=jEmail.getText().toString().trim();
+                final String pass=jPass.getText().toString().trim();
+                final String phone=jPhone.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
                     jEmail.setError("is Empety !");
@@ -80,9 +89,32 @@ public class Register extends AppCompatActivity {
                         if(task.isSuccessful()){
                             //send verivifation link
                             FirebaseUser usernya = auth.getCurrentUser();
+                            //ambil id user untuk membuat database pribadi
+                             userID = auth.getCurrentUser().getUid();
+                            //buat dtabase firestore namanya document
+                            DocumentReference documentReference=db.collection("users").document(userID);
+                            Map<String,Object>user=new HashMap<>();
+                            user.put("email",email);
+                            user.put("nama",nama);
+                            user.put("phone",phone);
+                            user.put("pass",pass);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: "+userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: "+e.getMessage());
+                                }
+                            });
+                            //kirim email verifikasi
                             usernya.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+
+
                                     Toast.makeText(Register.this, "Verifikas email telah dikirim", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
