@@ -45,14 +45,38 @@
                 android:gravity="end"
                 android:text="TextView"
                 android:textColor="#0689F1" />
+
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/id_gambar_main"
-            android:layout_width="164dp"
-            android:layout_height="180dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_baseline_person_pin_24" />
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/id_gambar_main"
+                android:layout_width="164dp"
+                android:layout_height="180dp"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_baseline_person_pin_24" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/id_ubahgambar"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ubah_gambar"
+            android:text="Ubah Gambar"
+            android:textColor="#FFFEFE"
+            android:textSize="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -184,22 +208,10 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/id_ubahgambar"
+            android:id="@+id/btn_reset_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="18dp"
-
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/button_tambah"
-            android:text="Ubah Gambar"
-            android:textColor="#FFFEFE" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:onClick="LupasPassword"
 
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"

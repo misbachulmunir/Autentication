@@ -181,4 +181,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void LupasPassword(View view) {
+        auth.sendPasswordResetEmail(temail.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(MainActivity.this, "Success send link, Please check your mail", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Link tidak terkirim"+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        Log.d(TAG, "LupasPassword: ");
+    }
 }
